@@ -63,3 +63,11 @@ R/batchrunner/*.csv
 .RData
 inst/doc
 vignettes/rsconnect
+
+.idea/
+logs/
+inst/output/
+
+cmake-*/
+CMakeLists.txt
+compile.sh
