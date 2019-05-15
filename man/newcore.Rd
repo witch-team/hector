@@ -4,7 +4,7 @@
 \alias{newcore}
 \title{Create and initialize a new hector instance}
 \usage{
-newcore(inifile, loglevel = 0, suppresslogging = FALSE,
+newcore(inifile, loglevel = 0, suppresslogging = TRUE,
   name = "unnamed hector core")
 }
 \arguments{
@@ -29,3 +29,4 @@ Other main user interface functions: \code{\link{fetchvars}},
   \code{\link{reset}}, \code{\link{run}},
   \code{\link{setvar}}, \code{\link{shutdown}}
 }
+\concept{main user interface functions}

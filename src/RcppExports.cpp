@@ -195,6 +195,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RFADJ_PREFIX
+String RFADJ_PREFIX();
+RcppExport SEXP _hector_RFADJ_PREFIX() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(RFADJ_PREFIX());
+    return rcpp_result_gen;
+END_RCPP
+}
+// RF_PREFIX
+String RF_PREFIX();
+RcppExport SEXP _hector_RF_PREFIX() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(RF_PREFIX());
+    return rcpp_result_gen;
+END_RCPP
+}
 // RF_CF4
 String RF_CF4();
 RcppExport SEXP _hector_RF_CF4() {
@@ -1175,6 +1195,56 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// F_NPPV
+String F_NPPV();
+RcppExport SEXP _hector_F_NPPV() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(F_NPPV());
+    return rcpp_result_gen;
+END_RCPP
+}
+// F_NPPD
+String F_NPPD();
+RcppExport SEXP _hector_F_NPPD() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(F_NPPD());
+    return rcpp_result_gen;
+END_RCPP
+}
+// F_LITTERD
+String F_LITTERD();
+RcppExport SEXP _hector_F_LITTERD() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(F_LITTERD());
+    return rcpp_result_gen;
+END_RCPP
+}
+// F_LUCV
+String F_LUCV();
+RcppExport SEXP _hector_F_LUCV() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(F_LUCV());
+    return rcpp_result_gen;
+END_RCPP
+}
+// F_LUCD
+String F_LUCD();
+RcppExport SEXP _hector_F_LUCD() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(F_LUCD());
+    return rcpp_result_gen;
+END_RCPP
+}
 // NATURAL_SO2
 String NATURAL_SO2();
 RcppExport SEXP _hector_NATURAL_SO2() {
@@ -1235,6 +1305,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// VOLCANIC_SCALE
+String VOLCANIC_SCALE();
+RcppExport SEXP _hector_VOLCANIC_SCALE() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(VOLCANIC_SCALE());
+    return rcpp_result_gen;
+END_RCPP
+}
 // GLOBAL_TEMP
 String GLOBAL_TEMP();
 RcppExport SEXP _hector_GLOBAL_TEMP() {
@@ -1252,6 +1332,36 @@ BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     rcpp_result_gen = Rcpp::wrap(GLOBAL_TEMPEQ());
+    return rcpp_result_gen;
+END_RCPP
+}
+// OCEAN_SURFACE_TEMP
+String OCEAN_SURFACE_TEMP();
+RcppExport SEXP _hector_OCEAN_SURFACE_TEMP() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(OCEAN_SURFACE_TEMP());
+    return rcpp_result_gen;
+END_RCPP
+}
+// OCEAN_AIR_TEMP
+String OCEAN_AIR_TEMP();
+RcppExport SEXP _hector_OCEAN_AIR_TEMP() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(OCEAN_AIR_TEMP());
+    return rcpp_result_gen;
+END_RCPP
+}
+// LAND_TEMP
+String LAND_TEMP();
+RcppExport SEXP _hector_LAND_TEMP() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(LAND_TEMP());
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1320,18 +1430,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// run
-Environment run(Environment core, double runtodate);
-RcppExport SEXP _hector_run(SEXP coreSEXP, SEXP runtodateSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Environment >::type core(coreSEXP);
-    Rcpp::traits::input_parameter< double >::type runtodate(runtodateSEXP);
-    rcpp_result_gen = Rcpp::wrap(run(core, runtodate));
-    return rcpp_result_gen;
-END_RCPP
-}
 // reset
 Environment reset(Environment core, double date);
 RcppExport SEXP _hector_reset(SEXP coreSEXP, SEXP dateSEXP) {
@@ -1341,6 +1439,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Environment >::type core(coreSEXP);
     Rcpp::traits::input_parameter< double >::type date(dateSEXP);
     rcpp_result_gen = Rcpp::wrap(reset(core, date));
+    return rcpp_result_gen;
+END_RCPP
+}
+// run
+Environment run(Environment core, double runtodate);
+RcppExport SEXP _hector_run(SEXP coreSEXP, SEXP runtodateSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Environment >::type core(coreSEXP);
+    Rcpp::traits::input_parameter< double >::type runtodate(runtodateSEXP);
+    rcpp_result_gen = Rcpp::wrap(run(core, runtodate));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -1403,6 +1513,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hector_RF_SO2I", (DL_FUNC) &_hector_RF_SO2I, 0},
     {"_hector_RF_SO2", (DL_FUNC) &_hector_RF_SO2, 0},
     {"_hector_RF_VOL", (DL_FUNC) &_hector_RF_VOL, 0},
+    {"_hector_RFADJ_PREFIX", (DL_FUNC) &_hector_RFADJ_PREFIX, 0},
+    {"_hector_RF_PREFIX", (DL_FUNC) &_hector_RF_PREFIX, 0},
     {"_hector_RF_CF4", (DL_FUNC) &_hector_RF_CF4, 0},
     {"_hector_RF_C2F6", (DL_FUNC) &_hector_RF_C2F6, 0},
     {"_hector_RF_HFC23", (DL_FUNC) &_hector_RF_HFC23, 0},
@@ -1501,22 +1613,31 @@ static const R_CallMethodDef CallEntries[] = {
     {"_hector_LUC_EMISSIONS", (DL_FUNC) &_hector_LUC_EMISSIONS, 0},
     {"_hector_Q10_RH", (DL_FUNC) &_hector_Q10_RH, 0},
     {"_hector_BETA", (DL_FUNC) &_hector_BETA, 0},
+    {"_hector_F_NPPV", (DL_FUNC) &_hector_F_NPPV, 0},
+    {"_hector_F_NPPD", (DL_FUNC) &_hector_F_NPPD, 0},
+    {"_hector_F_LITTERD", (DL_FUNC) &_hector_F_LITTERD, 0},
+    {"_hector_F_LUCV", (DL_FUNC) &_hector_F_LUCV, 0},
+    {"_hector_F_LUCD", (DL_FUNC) &_hector_F_LUCD, 0},
     {"_hector_NATURAL_SO2", (DL_FUNC) &_hector_NATURAL_SO2, 0},
     {"_hector_Y2000_SO2", (DL_FUNC) &_hector_Y2000_SO2, 0},
     {"_hector_EMISSIONS_SO2", (DL_FUNC) &_hector_EMISSIONS_SO2, 0},
     {"_hector_VOLCANIC_SO2", (DL_FUNC) &_hector_VOLCANIC_SO2, 0},
     {"_hector_ECS", (DL_FUNC) &_hector_ECS, 0},
     {"_hector_AERO_SCALE", (DL_FUNC) &_hector_AERO_SCALE, 0},
+    {"_hector_VOLCANIC_SCALE", (DL_FUNC) &_hector_VOLCANIC_SCALE, 0},
     {"_hector_GLOBAL_TEMP", (DL_FUNC) &_hector_GLOBAL_TEMP, 0},
     {"_hector_GLOBAL_TEMPEQ", (DL_FUNC) &_hector_GLOBAL_TEMPEQ, 0},
+    {"_hector_OCEAN_SURFACE_TEMP", (DL_FUNC) &_hector_OCEAN_SURFACE_TEMP, 0},
+    {"_hector_OCEAN_AIR_TEMP", (DL_FUNC) &_hector_OCEAN_AIR_TEMP, 0},
+    {"_hector_LAND_TEMP", (DL_FUNC) &_hector_LAND_TEMP, 0},
     {"_hector_DIFFUSIVITY", (DL_FUNC) &_hector_DIFFUSIVITY, 0},
     {"_hector_FLUX_MIXED", (DL_FUNC) &_hector_FLUX_MIXED, 0},
     {"_hector_FLUX_INTERIOR", (DL_FUNC) &_hector_FLUX_INTERIOR, 0},
     {"_hector_HEAT_FLUX", (DL_FUNC) &_hector_HEAT_FLUX, 0},
     {"_hector_newcore_impl", (DL_FUNC) &_hector_newcore_impl, 4},
     {"_hector_shutdown", (DL_FUNC) &_hector_shutdown, 1},
-    {"_hector_run", (DL_FUNC) &_hector_run, 2},
     {"_hector_reset", (DL_FUNC) &_hector_reset, 2},
+    {"_hector_run", (DL_FUNC) &_hector_run, 2},
     {"_hector_getdate", (DL_FUNC) &_hector_getdate, 1},
     {"_hector_sendmessage", (DL_FUNC) &_hector_sendmessage, 6},
     {"_hector_chk_core_valid", (DL_FUNC) &_hector_chk_core_valid, 1},

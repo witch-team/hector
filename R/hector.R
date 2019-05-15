@@ -83,7 +83,7 @@ runscenario <- function(infile)
 #' @return handle for the Hector instance.
 #' @family main user interface functions
 #' @export
-newcore <- function(inifile, loglevel=0, suppresslogging=FALSE,
+newcore <- function(inifile, loglevel=0, suppresslogging=TRUE,
                     name="unnamed hector core")
 {
     hcore <- newcore_impl(inifile, loglevel, suppresslogging, name)
@@ -133,6 +133,13 @@ enddate <- function(core)
     core$enddate
 }
 
+#' \strong{getname}: Report the name for a Hector instance
+#' @rdname hectorutil
+#' @export
+getname <- function(core)
+{
+    core$name
+}
 
 
 #### Methods for hcore objects

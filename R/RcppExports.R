@@ -2,7 +2,7 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @include aadoc.R
-#' @describeIn msgtype Message type for retrieving data from a component 
+#' @describeIn msgtype Message type for retrieving data from a component
 #' @export
 #' @keywords internal
 GETDATA <- function() {
@@ -40,7 +40,7 @@ LL_SEVERE <- function() {
     .Call('_hector_LL_SEVERE', PACKAGE = 'hector')
 }
 
-#' @describeIn emissions Black carbon emissions (\code{"Tg"}) 
+#' @describeIn emissions Black carbon emissions (\code{"Tg"})
 #' @export
 EMISSIONS_BC <- function() {
     .Call('_hector_EMISSIONS_BC', PACKAGE = 'hector')
@@ -116,6 +116,14 @@ RF_SO2 <- function() {
 #' @export
 RF_VOL <- function() {
     .Call('_hector_RF_VOL', PACKAGE = 'hector')
+}
+
+RFADJ_PREFIX <- function() {
+    .Call('_hector_RFADJ_PREFIX', PACKAGE = 'hector')
+}
+
+RF_PREFIX <- function() {
+    .Call('_hector_RF_PREFIX', PACKAGE = 'hector')
 }
 
 #' @describeIn haloforcings Radiative forcing due to CF4
@@ -706,6 +714,36 @@ BETA <- function() {
     .Call('_hector_BETA', PACKAGE = 'hector')
 }
 
+#' @describeIn parameters NPP fraction to vegetation (\code{"(unitless)"})
+#' @export
+F_NPPV <- function() {
+    .Call('_hector_F_NPPV', PACKAGE = 'hector')
+}
+
+#' @describeIn parameters NPP fraction to detritus (\code{"(unitless)"})
+#' @export
+F_NPPD <- function() {
+    .Call('_hector_F_NPPD', PACKAGE = 'hector')
+}
+
+#' @describeIn parameters Litter fraction to detritus (\code{"(unitless)"})
+#' @export
+F_LITTERD <- function() {
+    .Call('_hector_F_LITTERD', PACKAGE = 'hector')
+}
+
+#' @describeIn parameters LUC fraction to vegetation (\code{"(unitless)"})
+#' @export
+F_LUCV <- function() {
+    .Call('_hector_F_LUCV', PACKAGE = 'hector')
+}
+
+#' @describeIn parameters LUC fraction to detritus (\code{"(unitless)"})
+#' @export
+F_LUCD <- function() {
+    .Call('_hector_F_LUCD', PACKAGE = 'hector')
+}
+
 #' @rdname so2
 #' @export
 NATURAL_SO2 <- function() {
@@ -736,10 +774,16 @@ ECS <- function() {
     .Call('_hector_ECS', PACKAGE = 'hector')
 }
 
-#' @describeIn parameters Aerosol scaling factor (\code{"(unitless)"})
+#' @describeIn parameters Aerosol forcing scaling factor (\code{"(unitless)"})
 #' @export
 AERO_SCALE <- function() {
     .Call('_hector_AERO_SCALE', PACKAGE = 'hector')
+}
+
+#' @describeIn parameters Volcanic forcing scaling factor (\code{"(unitless)"})
+#' @export
+VOLCANIC_SCALE <- function() {
+    .Call('_hector_VOLCANIC_SCALE', PACKAGE = 'hector')
 }
 
 #' @describeIn temperature Global mean temperature
@@ -752,6 +796,24 @@ GLOBAL_TEMP <- function() {
 #' @export
 GLOBAL_TEMPEQ <- function() {
     .Call('_hector_GLOBAL_TEMPEQ', PACKAGE = 'hector')
+}
+
+#' @describeIn temperature Average ocean surface temperature anomaly
+#' @export
+OCEAN_SURFACE_TEMP <- function() {
+    .Call('_hector_OCEAN_SURFACE_TEMP', PACKAGE = 'hector')
+}
+
+#' @describeIn temperature Average ocean air temperature anomaly
+#' @export
+OCEAN_AIR_TEMP <- function() {
+    .Call('_hector_OCEAN_AIR_TEMP', PACKAGE = 'hector')
+}
+
+#' @describeIn temperature Average land temperature anomaly
+#' @export
+LAND_TEMP <- function() {
+    .Call('_hector_LAND_TEMP', PACKAGE = 'hector')
 }
 
 #' @describeIn parameters Ocean heat diffusivity (\code{"cm2/s"})
@@ -799,21 +861,6 @@ shutdown <- function(core) {
     .Call('_hector_shutdown', PACKAGE = 'hector', core)
 }
 
-#' Run the Hector climate model
-#'
-#' Run Hector up through the specified time.  This function does not return the results
-#' of the run.  To get results, run \code{fetch}.
-#'
-#' @param core Handle to the Hector instance that is to be run.
-#' @param runtodate Date to run to.  The default is to run to the end date configured
-#' in the input file used to initialize the core.
-#' @return The Hector instance handle
-#' @export
-#' @family main user interface functions
-run <- function(core, runtodate = -1.0) {
-    .Call('_hector_run', PACKAGE = 'hector', core, runtodate)
-}
-
 #' Reset a Hector instance to an earlier date
 #'
 #' Resetting the model returns it to its state at a previous time.  If the requested time
@@ -830,6 +877,21 @@ run <- function(core, runtodate = -1.0) {
 #' @export
 reset <- function(core, date = 0) {
     .Call('_hector_reset', PACKAGE = 'hector', core, date)
+}
+
+#' Run the Hector climate model
+#'
+#' Run Hector up through the specified time.  This function does not return the results
+#' of the run.  To get results, run \code{fetch}.
+#'
+#' @param core Handle to the Hector instance that is to be run.
+#' @param runtodate Date to run to.  The default is to run to the end date configured
+#' in the input file used to initialize the core.
+#' @return The Hector instance handle
+#' @export
+#' @family main user interface functions
+run <- function(core, runtodate = -1.0) {
+    .Call('_hector_run', PACKAGE = 'hector', core, runtodate)
 }
 
 #' \strong{getdate}: Get the current date for a Hector instance

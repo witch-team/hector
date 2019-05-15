@@ -65,6 +65,7 @@ R/batchrunner/*.csv
 inst/doc
 vignettes/rsconnect
 
+<<<<<<< HEAD
 .idea/
 logs/
 inst/output/
@@ -72,3 +73,10 @@ inst/output/
 cmake-*/
 CMakeLists.txt
 compile.sh
+=======
+# pkgdown output
+/docs/
+
+# vignette caches
+/vignettes/*_cache
+>>>>>>> upstream/master

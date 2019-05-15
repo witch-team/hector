@@ -6,13 +6,18 @@ testvars <- c(ATMOSPHERIC_CO2(), RF_TOTAL(), GLOBAL_TEMP())
 dates <- 2000:2300
 
 test_that('Basic hcore functionality works', {
-    hc <- newcore(file.path(inputdir, 'hector_rcp45.ini'), suppresslogging = TRUE)
+    hc <- newcore(file.path(inputdir, 'hector_rcp45.ini'), name='RCP45', suppresslogging = TRUE)
     run(hc, 2100)
     expect_true(inherits(hc, 'hcore'))
     expect_true(isactive(hc))
     expect_equal(startdate(hc), 1745)
     expect_equal(enddate(hc), 2300)
     expect_equal(getdate(hc), 2100)
+    expect_equal(getname(hc), 'RCP45')
+
+    expect_error(run(hc, 2050), "is prior to the current date")
+    expect_silent(run(hc, 2100))
+    expect_silent(run(hc))
 
     hc <- shutdown(hc)
     expect_false(isactive(hc))
@@ -95,4 +100,120 @@ test_that("Setting emissions changes results", {
     expect_true(all(outdata2b$value > outdata1b$value))
 
     hc <- shutdown(hc)
+})
+
+
+test_that("Automatic reset is performed if and only if core is not marked 'clean'.", {
+    hc <- newcore(file.path(inputdir, 'hector_rcp45.ini'), suppresslogging = TRUE)
+
+    expect_true(hc$clean)
+    run(hc, 2100)
+    ## We can test whether reset actually runs by noting that trying to run to
+    ## an earlier date is an error, but an auto-reset will prevent the error
+    expect_error(run(hc, 2050), "is prior") # No reset
+    hc$clean <- FALSE
+    hc$reset_date <- 0
+    expect_silent(run(hc, 2050))        # reset performed
+    expect_true(hc$clean)
+
+    hc$clean <- FALSE
+    reset(hc)                           # explicit reset
+    expect_true(hc$clean)
+
+    hc$clean <- FALSE
+    reset(hc, startdate(hc))            # doesn't rerun spinup
+    expect_false(hc$clean)
+    hc$reset_date <- 2000               # spinup no longer required
+    reset(hc, startdate(hc))
+    expect_true(hc$clean)
+
+    shutdown(hc)
+})
+
+
+test_that("Setting future values does not trigger a reset.", {
+    hc <- newcore(file.path(inputdir, 'hector_rcp45.ini'), suppresslogging = TRUE)
+
+    run(hc, 2100)
+    setvar(hc, 2101:2300, FFI_EMISSIONS(), 0.0, "Pg C/yr")
+    expect_true(hc$clean)
+
+    shutdown(hc)
+})
+
+
+test_that("Setting past or parameter values does trigger a reset.", {
+    hc <- newcore(file.path(inputdir, 'hector_rcp45.ini'), suppresslogging = TRUE)
+    run(hc, 2100)
+
+    setvar(hc, 2050:2150, FFI_EMISSIONS(), 0.0, "Pg C/yr")
+    expect_false(hc$clean)
+    expect_equal(hc$reset_date, 2049)
+    expect_error(run(hc, 2048), "is prior")
+    expect_true(hc$clean)               # reset still gets run!
+    expect_silent(run(hc, 2050))
+    expect_true(hc$clean)
+
+    setvar(hc, 2050:2150, FFI_EMISSIONS(), 0.0, "Pg C/yr") # edge case
+    expect_false(hc$clean)
+    expect_equal(hc$reset_date, 2049)
+    expect_error(run(hc, 2048), "is prior")
+    expect_silent(run(hc, 2050))
+    expect_true(hc$clean)
+
+    ## Setting two sets of values should reset to the lower one
+    setvar(hc, 2000, FFI_EMISSIONS(), 0.0, "Pg C/yr")
+    setvar(hc, 2010, FFI_EMISSIONS(), 0.0, "Pg C/yr")
+    expect_equal(hc$reset_date, 1999)
+    expect_false(hc$clean)
+    setvar(hc, 1972, FFI_EMISSIONS(), 0.0, "Pg C/yr")
+    expect_equal(hc$reset_date, 1971)
+    expect_false(hc$clean)
+
+    ## Setting parameter values should trigger a reset
+    setvar(hc, NA, ECS(), 2.5, 'degC')
+    expect_false(hc$clean)
+    expect_equal(hc$reset_date, 0)
+    reset(hc)
+    expect_true(hc$clean)
+    setvar(hc, NA, ECS(), 3, 'degC')
+    expect_false(hc$clean)
+    setvar(hc, 1800, FFI_EMISSIONS(), 0.0, "Pg C/yr") # shouldn't change the
+                                        # reset date
+    expect_equal(hc$reset_date, 0)
+
+
+    shutdown(hc)
+})
+
+
+test_that('Test RF output.', {
+
+    hc <- newcore(file.path(inputdir, 'hector_rcp45.ini'), suppresslogging = TRUE)
+    run(hc, 2100)
+
+    # Extract the total cliamte RF.
+    total_rf <- fetchvars(hc, dates = 1750:2100, RF_TOTAL())
+
+    # The vector of all the individual componets that contribute to RF.
+    rf_componets <- c(RF_BC(), RF_C2F6(),  RF_CCL4(),  RF_CF4(), RF_CFC11(),  RF_CFC113(),  RF_CFC114(),  RF_CFC115(), RF_CH3BR(),  RF_CH3CCL3(),
+                      RF_CH3CL(),  RF_CH4(),  RF_CO2(),  RF_H2O(), RF_HALON1211(),  RF_CFC12(),  RF_HALON1301(), RF_HALON2402(),  RF_HCF141B(),
+                      RF_HCF142B(),  RF_HCF22(),  RF_HFC125(),  RF_HFC134A(),  RF_HFC143A(),  RF_HFC227EA(), RF_HFC23(), RF_T_ALBEDO(),
+                      RF_HFC245FA(), RF_HFC32(),  RF_HFC4310(),  RF_N2O(), RF_O3(),  RF_OC(),  RF_SF6(), RF_SO2D(),  RF_SO2I(), RF_VOL())
+    individual_rf <- fetchvars(hc, 1750:2100, rf_componets)
+
+    # The RF value should be equal to 0 in the base year (1750) for all of the RF agents.
+    values_1750 <- dplyr::filter(individual_rf, year == 1750)
+    expect_equal(values_1750$value, expected = rep(0, nrow(values_1750)), info = 'RF values in the base year must be 0')
+
+    # That the sum of the RF agents should equal the total climate RF.
+    individual_rf %>%
+        dplyr::group_by(year) %>%
+        dplyr::summarise(value = sum(value)) %>%
+        dplyr::ungroup() ->
+        rf_aggregate
+
+    expect_equal(rf_aggregate$value, total_rf$value)
+
+    shutdown(hc)
 })

@@ -5,8 +5,14 @@
 \alias{PREINDUSTRIAL_CO2}
 \alias{Q10_RH}
 \alias{BETA}
+\alias{F_NPPV}
+\alias{F_NPPD}
+\alias{F_LITTERD}
+\alias{F_LUCV}
+\alias{F_LUCD}
 \alias{ECS}
 \alias{AERO_SCALE}
+\alias{VOLCANIC_SCALE}
 \alias{DIFFUSIVITY}
 \title{Identifiers for model parameters}
 \usage{
@@ -16,9 +22,21 @@ Q10_RH()
 
 BETA()
 
+F_NPPV()
+
+F_NPPD()
+
+F_LITTERD()
+
+F_LUCV()
+
+F_LUCD()
+
 ECS()
 
 AERO_SCALE()
+
+VOLCANIC_SCALE()
 
 DIFFUSIVITY()
 }
@@ -41,9 +59,21 @@ mass).
 
 \item \code{BETA}: CO2 fertilization factor (\code{"(unitless)"})
 
+\item \code{F_NPPV}: NPP fraction to vegetation (\code{"(unitless)"})
+
+\item \code{F_NPPD}: NPP fraction to detritus (\code{"(unitless)"})
+
+\item \code{F_LITTERD}: Litter fraction to detritus (\code{"(unitless)"})
+
+\item \code{F_LUCV}: LUC fraction to vegetation (\code{"(unitless)"})
+
+\item \code{F_LUCD}: LUC fraction to detritus (\code{"(unitless)"})
+
 \item \code{ECS}: Equilibrium Climate Sensitivity (\code{"degC"})
 
-\item \code{AERO_SCALE}: Aerosol scaling factor (\code{"(unitless)"})
+\item \code{AERO_SCALE}: Aerosol forcing scaling factor (\code{"(unitless)"})
+
+\item \code{VOLCANIC_SCALE}: Volcanic forcing scaling factor (\code{"(unitless)"})
 
 \item \code{DIFFUSIVITY}: Ocean heat diffusivity (\code{"cm2/s"})
 }}
@@ -64,3 +94,4 @@ Other capability identifiers: \code{\link{carboncycle}},
   \code{\link{ocean}}, \code{\link{so2}},
   \code{\link{temperature}}
 }
+\concept{capability identifiers}
