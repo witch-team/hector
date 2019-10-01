@@ -3,8 +3,9 @@
 \name{parameters}
 \alias{parameters}
 \alias{PREINDUSTRIAL_CO2}
-\alias{Q10_RH}
 \alias{BETA}
+\alias{Q10_RH}
+\alias{WARMINGFACTOR}
 \alias{F_NPPV}
 \alias{F_NPPD}
 \alias{F_LITTERD}
@@ -18,15 +19,17 @@
 \usage{
 PREINDUSTRIAL_CO2()
 
-Q10_RH()
+BETA(biome = "")
 
-BETA()
+Q10_RH(biome = "")
 
-F_NPPV()
+WARMINGFACTOR(biome = "")
 
-F_NPPD()
+F_NPPV(biome = "")
 
-F_LITTERD()
+F_NPPD(biome = "")
+
+F_LITTERD(biome = "")
 
 F_LUCV()
 
@@ -39,6 +42,10 @@ AERO_SCALE()
 VOLCANIC_SCALE()
 
 DIFFUSIVITY()
+}
+\arguments{
+\item{biome}{Biome for which to retrieve parameter. If missing or
+`""`, default to `"global"`.}
 }
 \description{
 These identifiers correspond to settable parameters that change the model
@@ -55,9 +62,11 @@ mass).
 \itemize{
 \item \code{PREINDUSTRIAL_CO2}: Preindustrial CO2 concentration (\code{"ppmv CO2"})
 
+\item \code{BETA}: CO2 fertilization factor (\code{"(unitless)"})
+
 \item \code{Q10_RH}: Heterotrophic respiration temperature sensitivity factor (\code{"(unitless)"})
 
-\item \code{BETA}: CO2 fertilization factor (\code{"(unitless)"})
+\item \code{WARMINGFACTOR}: Biome-specific warming factor (`(unitless)`)
 
 \item \code{F_NPPV}: NPP fraction to vegetation (\code{"(unitless)"})
 
