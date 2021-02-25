@@ -18,7 +18,7 @@
 #include "avisitor.hpp"
 
 namespace Hector {
-  
+
 using namespace std;
 
 //------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ DummyModelComponent::~DummyModelComponent() {
 // documentation is inherited
 string DummyModelComponent::getComponentName() const {
     const string name = DUMMY_COMPONENT_NAME;
-    
+
     return name;
 }
 
@@ -74,29 +74,29 @@ void DummyModelComponent::init( Core* core ) {
 // documentation is inherited
 unitval DummyModelComponent::sendMessage( const std::string& message,
                                          const std::string& datum,
-                                         const message_data info ) throw ( h_exception )
+                                         const message_data info )
 {
     unitval returnval;
-    
+
     if( message==M_GETDATA ) {          //! Caller is requesting data
         return getData( datum, info.date );
-        
+
     } else if( message==M_SETDATA ) {   //! Caller is requesting to set data
         //TODO: call setData below
         //TODO: change core so that parsing is routed through sendMessage
         //TODO: make setData private
-        
+
     } else {                        //! We don't handle any other messages
         H_THROW( "Caller sent unknown message: "+message );
     }
-    
+
     return returnval;
 }
 
 //------------------------------------------------------------------------------
 // documentation is inherited
 void DummyModelComponent::setData( const string& varName,
-                                   const message_data& data ) throw ( h_exception )
+                                   const message_data& data )
 {
     try {
         if( varName == H_STRINGIFY_VAR( slope ) ) {
@@ -118,10 +118,10 @@ void DummyModelComponent::setData( const string& varName,
 
 //------------------------------------------------------------------------------
 // documentation is inherited
-void DummyModelComponent::prepareToRun() throw ( h_exception ) {
-    
+void DummyModelComponent::prepareToRun() {
+
     H_LOG( logger, Logger::DEBUG ) << "prepareToRun " << std::endl;
-    
+
     // do some error checking
     H_ASSERT( slope != -1, "" );
     H_ASSERT( y != -1, "" );
@@ -131,12 +131,12 @@ void DummyModelComponent::prepareToRun() throw ( h_exception ) {
 
 //------------------------------------------------------------------------------
 // documentation is inherited
-void DummyModelComponent::run( const double runToDate ) throw ( h_exception ) {
+void DummyModelComponent::run( const double runToDate ) {
     // for some reason we need to calculate at a time-step of .1
     const double timeStep = 0.1;
     // make sure we can take at least 1 time-step.
     H_ASSERT( ( runToDate - prevX ) > timeStep, "time step error" );
-    
+
     for( ; prevX <= runToDate; prevX += timeStep ) {
         y = slope * timeStep + y + c.get( prevX ) - c.get( prevX - timeStep );
         H_LOG( logger, Logger::DEBUG ) << "Y = " << y << " at x " << prevX << std::endl;
@@ -146,21 +146,21 @@ void DummyModelComponent::run( const double runToDate ) throw ( h_exception ) {
 //------------------------------------------------------------------------------
 // documentation is inherited
 unitval DummyModelComponent::getData( const std::string& varName,
-                                     const double date ) throw ( h_exception ) {
-    
+                                     const double date ) {
+
     unitval returnval;
-    
+
     if( varName == H_STRINGIFY_VAR( x ) ) {
         H_ASSERT( date == Core::undefinedIndex(), "Date not allowed for x" );
         returnval.set( y, U_UNITLESS );
     } else {
         H_THROW( "Caller is requesting unknown variable: " + varName );
     }
-    
+
     return returnval;
 }
 
-void DummyModelComponent::reset(double time) throw(h_exception)
+void DummyModelComponent::reset(double time)
 {
     // This is a no-op for this component
     H_LOG(logger, Logger::NOTICE)

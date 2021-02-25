@@ -13,7 +13,12 @@
  */
 
 #include <fstream>
+
+// some boost headers generate warnings under clang; not our problem, ignore
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 #include <boost/lexical_cast.hpp>
+#pragma clang diagnostic pop
 
 #include "dummy_model_component.hpp"
 #include "forcing_component.hpp"
@@ -33,7 +38,7 @@
 #include "csv_outputstream_visitor.hpp"
 
 namespace Hector {
-  
+
 using namespace std;
 
 //------------------------------------------------------------------------------
@@ -67,12 +72,12 @@ CSVOutputStreamVisitor::~CSVOutputStreamVisitor() {
 //------------------------------------------------------------------------------
 // documentation is inherited
 bool CSVOutputStreamVisitor::shouldVisit( const bool is, const double date ) {
-    
+
     current_date = date;
     in_spinup = is;
-    datestring = boost::lexical_cast<string>( date ); 
+    datestring = boost::lexical_cast<string>( date );
     spinupstring = boost::lexical_cast<string>( in_spinup );
-    
+
     // visit all model periods
     return true;
 }
@@ -129,14 +134,14 @@ void CSVOutputStreamVisitor::visit( ForcingComponent* c ) {
 
     if(c->currentYear < c->baseyear)
         return;
-    
+
     ForcingComponent::forcings_t  forcings = c->forcings_ts.get(c->currentYear);
-    
+
     // Walk through the forcings map, outputting everything
     for( ForcingComponent::forcingsIterator it = forcings.begin(); it != forcings.end(); ++it ) {
         STREAM_UNITVAL( csvFile, c, ( *it ).first, ( *it ).second );
     }
-    
+
     csvFile.precision( oldPrecision );
 }
 
@@ -156,7 +161,7 @@ void CSVOutputStreamVisitor::visit( SimpleNbox* c ) {
     STREAM_MESSAGE( csvFile, c, D_DETRITUSC );
     STREAM_MESSAGE( csvFile, c, D_SOILC );
     STREAM_MESSAGE( csvFile, c, D_EARTHC );
-    
+
     // Biome-specific outputs: <variable>.<biome>
     if( c->veg_c.size() > 1 ) {
         SimpleNbox::unitval_stringmap::const_iterator it;

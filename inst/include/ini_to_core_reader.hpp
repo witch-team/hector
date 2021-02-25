@@ -36,7 +36,7 @@ class INIToCoreReader {
     INIToCoreReader( Core* core );
     ~INIToCoreReader();
 
-    void parse( const std::string& filename ) throw ( h_exception );
+    void parse( const std::string& filename );
 
     private:
     //! Weak reference to a Core object that will handle parsed values
@@ -49,12 +49,12 @@ class INIToCoreReader {
     //! Note that this would only be valid if valueHandler returned
     //! an error code.
     h_exception valueHandlerException;
-    
+
     static int valueHandler( void* user, const char* section, const char* name,
                              const char* value);
-    
+
     typedef std::string::const_iterator StringIter;
-    static double parseTSeriesIndex( const StringIter startBracket, 
+    static double parseTSeriesIndex( const StringIter startBracket,
                                      const StringIter endBracket,
                                      const StringIter strEnd );
 };

@@ -20,7 +20,7 @@
 #include "h_util.hpp"
 
 namespace Hector {
-  
+
 using namespace std;
 using namespace boost;
 
@@ -115,7 +115,7 @@ string unitval::unitsName( const unit_types u ) {
         break;
     case U_YRS: return "Years";
         break;
-        
+
     default: H_THROW( "Unhandled unit!" );
     }
 }
@@ -126,7 +126,7 @@ string unitval::unitsName( const unit_types u ) {
  *  Uses names consistent with unitsName to translate between strings and
  *  unit_types.
  */
-unit_types unitval::parseUnitsName( const string& unitsStr ) throw( h_exception ) {
+unit_types unitval::parseUnitsName( const string& unitsStr ) {
     // Iterate over all the enumerated units and check if its unitsName() matches
     // the given units string.
     /*!
@@ -138,7 +138,7 @@ unit_types unitval::parseUnitsName( const string& unitsStr ) throw( h_exception 
             return u;
         }
     }
-    
+
     // No unitsNames matched.
     H_THROW( "Could not parse unknown units string: " + unitsStr );
 }
@@ -157,19 +157,19 @@ unit_types unitval::parseUnitsName( const string& unitsStr ) throw( h_exception 
  *      - The units string (if set) does not match the expected units.
  */
 unitval unitval::parse_unitval( const string& unitvalStr,
-                               const unit_types& expectedUnits ) throw( h_exception )
+                               const unit_types& expectedUnits )
 {
     // we are assuming that should units exist they will be in the format of:
     // [value],[units]
     string::const_iterator commaPos = find( unitvalStr.begin(), unitvalStr.end(), ',' );
-    
+
     string valueStr = string( unitvalStr.begin(), commaPos );
     string unitsStr = commaPos == unitvalStr.end() ? string() : string( commaPos + 1, unitvalStr.end() );
-    
+
     // remove extra whitespace
     trim( valueStr );
     trim( unitsStr );
-    
+
     return parse_unitval( valueStr, unitsStr, expectedUnits );
 }
 
@@ -188,24 +188,24 @@ unitval unitval::parse_unitval( const string& unitvalStr,
  *      - The units string (if set) does not match the expected units.
  */
 unitval unitval::parse_unitval( const string& valueStr, const string& unitsStr,
-                               const unit_types& expectedUnits ) throw( h_exception )
+                               const unit_types& expectedUnits )
 {
     // Double check if a user really provided a single unitval string in which
     // case it should be re-parsed before converting.
     if( unitsStr.empty() && find( valueStr.begin(), valueStr.end(), ',' ) != valueStr.end() ) {
         return parse_unitval( valueStr, expectedUnits );
     }
-    
+
     double value;
     unit_types units;
-    
+
     try {
         // parse the numerical value of the unitval
         value = lexical_cast<double>( valueStr );
     } catch( bad_lexical_cast& castException ) {
         H_THROW( "Could not convert value "+valueStr+", exception: "+castException.what() );
     }
-    
+
     if( unitsStr.empty() ) {
         // we are currently allowing input files to not have to specify units and
         // are assuming they are in the expected units
@@ -215,7 +215,7 @@ unitval unitval::parse_unitval( const string& valueStr, const string& unitsStr,
         units = parseUnitsName( unitsStr );
         H_ASSERT( units == expectedUnits, "Units: "+unitsStr+" do not match expected: "+unitsName( expectedUnits ) );
     }
-    
+
     return unitval( value, units );
 }
 
@@ -226,7 +226,7 @@ unitval unitval::parse_unitval( const string& valueStr, const string& unitsStr,
  *  \exception h_exception An exception may be raised for the following reasons:
  *      - The originally set units do not match the expected units.
  */
-void unitval::expecting_unit( const unit_types& expectedUnits ) throw( h_exception ) {
+void unitval::expecting_unit( const unit_types& expectedUnits ) {
     if (valUnits == U_UNDEFINED) {
         valUnits = expectedUnits;
     } else {

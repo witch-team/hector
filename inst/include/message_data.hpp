@@ -20,7 +20,7 @@
 #include "unitval.hpp"
 
 namespace Hector {
-  
+
 /*! \brief Message data type.
  *
  *  Contains fields for all the types of data that may be passed around with
@@ -31,17 +31,17 @@ struct message_data {
     message_data(): date( Core::undefinedIndex() ), isVal(false)
     {
     }
-    
+
     // Create a message data to pass a date.
     message_data( const double d ): date( d ), isVal(false)
     {
     }
-    
+
     // Create a message data to pass a string.
     message_data( const std::string& value ): date( Core::undefinedIndex() ), value_str( value ), isVal(false)
     {
     }
-    
+
     // Create a message data to pass a unitval.
     message_data( const unitval& value ): date( Core::undefinedIndex() ), value_unitval( value ), isVal(true)
     {
@@ -60,7 +60,7 @@ struct message_data {
      *      - The unitval units do not match the expected units.
      *      - The value string could not be parsed.
      */
-    unitval getUnitval(const unit_types& expectedUnits, const bool strict = false) const throw ( h_exception ) {
+    unitval getUnitval(const unit_types& expectedUnits, const bool strict = false) const {
         if(isVal) {
             if (strict) {
                 H_ASSERT( value_unitval.units() == expectedUnits, "Units: "+value_unitval.unitsName()+" do not match expected: "+unitval::unitsName( expectedUnits ) );
@@ -77,13 +77,13 @@ struct message_data {
     }
     //! (optional) a date for which this value is for.
     double date;
-    
+
     //! The message data as a string (if applicable).
     std::string value_str;
 
     //! The message data as a unitval (if applicable).
     unitval value_unitval;
-    
+
     //! A string characterizing the units of value (if applicable).
     std::string units_str;
 

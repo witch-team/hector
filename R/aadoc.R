@@ -7,13 +7,11 @@
 #' @name loglevels
 NULL
 
-
 #' Utility functions for Hector instances
 #'
 #' @param core Hector instance to operate on
 #' @name hectorutil
 NULL
-
 
 #' Message type identifiers
 #'
@@ -29,7 +27,6 @@ NULL
 #' @name msgtype
 NULL
 
-
 #' Identifiers for capabilities in the Hector forcing component
 #'
 #' These identifiers specify forcing values that can be provided by hector via
@@ -44,7 +41,6 @@ NULL
 #' @family capability identifiers
 NULL
 
-
 #' Identifiers for variables in the Hector carbon cycle component
 #'
 #' These identifiers correspond to variables that can be read and/or set in the
@@ -55,7 +51,12 @@ NULL
 #' \describe{
 #' \item{ATMOSPHERIC_CO2}{Atmospheric CO2 concentration}
 #' \item{ATMOSPHERIC_C}{Atmospheric carbon pool}
-#' \item{LAND_CFLUX}{Land carbon flux}
+#' \item{LAND_CFLUX}{Annual global C flux from atmosphere into the land. A
+#'   positive value means a net flux from atmosphere into land (i.e. land is a
+#'   net carbon sink), while a negative value means a net flux from land into
+#'   the atmosphere (i.e. land is a net carbon source)}
+#' \item{NBP}{Net biome production (synonymous with \code{LAND_CFLUX}). Note
+#'   that despite the name, this is currently a globally-averaged variable.}
 #' \item{FFI_EMISSIONS}{Fossil fuel and industrial emissions}
 #' \item{LUC_EMISSIONS}{Land use change emissions}
 #' }
@@ -63,6 +64,7 @@ NULL
 #' \describe{
 #' \item{FFI_EMISSIONS}{Fossil fuel and industrial emissions (\code{"Pg C/yr"})}
 #' \item{LUC_EMISSIONS}{Land use change emissions (\code{"Pg C/yr"})}
+#' \item{CO2_CONSTRAIN}{Prescribed atmospheric CO2 concentration (\code{"ppmv CO2"})}
 #' }
 #' @inheritSection msgtype Note
 #' @name carboncycle
@@ -87,7 +89,6 @@ NULL
 #' @family capability identifiers
 NULL
 
-
 #' Identifiers for halocarbon emissions
 #'
 #' These identifiers correspond to emissions values for halocarbons.  They are
@@ -101,6 +102,27 @@ NULL
 #' @family capability identifiers
 NULL
 
+#' Identifiers for halocarbon concentration constraints
+#'
+#' These identifiers correspond to concentration constraints for halocarbons. In
+#' all cases, the expected input units are volumetric parts per trillion
+#' (\code{"ppvt"}).
+#'
+#' @inheritSection msgtype Note
+#'
+#' @name haloconstrain
+#' @family capability identifiers
+NULL
+
+#' Identifiers for concentration constraints
+#'
+#' These identifiers correspond to concentration constraints.
+#'
+#' @inheritSection msgtype Note
+#'
+#' @name constraints
+#' @family capability identifiers
+NULL
 
 #' Identifiers for quantities in the methane component
 #'

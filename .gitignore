@@ -77,3 +77,4 @@ compile.sh
 
 # vignette caches
 /vignettes/*_cache
+docs

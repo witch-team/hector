@@ -36,7 +36,7 @@
 #include "h_exception.hpp"
 
 namespace Hector {
-  
+
 /*! \brief Time vector data type.
  *
  *  Currently implemented as an STL map.
@@ -47,8 +47,8 @@ class tvector {
 public:
 
     void set(double, const T_data &);
-    const T_data &get(double) const throw( h_exception );
-    T_data &get(double) throw(h_exception); // allow modify-in-place
+    const T_data &get(double) const;
+    T_data &get(double); // allow modify-in-place
     bool exists( double ) const;
 
     // indexing operators: the const version is just syntactic sugar
@@ -56,16 +56,16 @@ public:
     // requested object doesn't exist, it default constructs it,
     // assigns the new object, and returns the reference to the newly
     // created object.  This allows you to write tvec[t] = xx.
-    const T_data &operator[](double t) const throw(h_exception) {
+    const T_data &operator[](double t) const {
         return get(t);
     }
     T_data &operator[](double t);
-    
+
     double firstdate() const;
     double lastdate() const;
-    
+
     int size() const;
-    
+
     void truncate(double t, bool after=true);
 private:
     static double round(double t) {
@@ -105,7 +105,7 @@ bool tvector<T_data>::exists( double t ) const {
  *  If no value exists, raise an exception.
  */
 template <class T_data>
-const T_data &tvector<T_data>::get( double t ) const throw( h_exception ) {
+const T_data &tvector<T_data>::get( double t ) const {
     typename std::map<double,T_data>::const_iterator itr = mapdata.find( round(t) );
     if( itr != mapdata.end() )
         return (*itr).second;
@@ -122,16 +122,16 @@ const T_data &tvector<T_data>::get( double t ) const throw( h_exception ) {
  * non-const reference, allowing an object to be modified in place.
  */
 template <class T_data>
-T_data &tvector<T_data>::get( double t ) throw( h_exception ) {
+T_data &tvector<T_data>::get( double t ) {
     typename std::map<double,T_data>::iterator itr = mapdata.find( round(t) );
     if( itr != mapdata.end() )
         return itr->second;
     else {
         std::ostringstream errmsg;
-        errmsg << "No data at requested time= " << round(t) << "\n"; 
+        errmsg << "No data at requested time= " << round(t) << "\n";
         H_THROW(errmsg.str());
     }
-}   
+}
 
 template <class T_data>
 T_data &tvector<T_data>::operator[](double t) {
@@ -184,7 +184,7 @@ int tvector<T_data>::size() const {
  *  \details The default is to wipe all of the data in the time vector
  *           after the input date.  By setting the optional after
  *           argument to false, you can wipe data before the input
- *           date instead. 
+ *           date instead.
  */
 template <class T>
 void tvector<T>::truncate(double t, bool after)
@@ -198,8 +198,8 @@ void tvector<T>::truncate(double t, bool after)
     else {
         it1 = mapdata.begin();
         it2 = mapdata.lower_bound(t);
-    } 
-    mapdata.erase(it1,it2); 
+    }
+    mapdata.erase(it1,it2);
 }
 
 }
